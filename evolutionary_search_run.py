@@ -15,8 +15,8 @@ def main():
     outputs = pickle.load(open('methane_storage.pkl', 'rb'))['outputs'].values
     outputs = ((outputs - np.min(outputs))/(np.max(outputs)-np.min(outputs)))
     # CMA-ES requires two main params: sigma and population size
-    sigma_list = [0.1, 0.2, 0.5]
-    pop_list = [20, 50, 100]
+    sigma_list = [0.2]# [0.1, 0.2, 0.5]
+    pop_list = [20]# [20, 50, 100]
     for i in range(25):
         print(f"Iteration {i}**************")
         x_init = np.random.rand(12)
