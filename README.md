@@ -2,7 +2,7 @@
 
 #### This repository contains source code for the paper [Bayesian optimization of nanoporous materials](). The details for reproducing the results are given below:
 
-
+- To prepare the data from Mercado et al. [here](https://pubs.acs.org/doi/10.1021/acs.chemmater.8b01425), visit [Materials Cloud](https://archive.materialscloud.org/record/2018.0003/v2) and download and untar `properties.tgz`. run `COF_dataframe_to_methane_storage.py` to read in the data and write to `.pkl` files for convenience.
 - The main code of Bayesian optimization can be run by ```python bo_run.py```. The core logic for this code is built using [GpyTorch](https://github.com/cornellius-gp/gpytorch) and
 [BoTorch](https://github.com/pytorch/botorch) libraries. 
 - Code for One shot supervised learning (Random Forest: with and without diverse training set) is provided in ```random_forest_run.py``` ```diverse_random_forest_run.py```.
