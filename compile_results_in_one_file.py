@@ -55,11 +55,11 @@ def main():
 
     temp = []
     for i in range(10):
-        temp.append(torch.load('bo_data_run'+str(i)+'.pkl')['outputs'])
+        if os.path.exists('bo_data_run'+str(i)+'.pkl'):
+            temp.append(torch.load('bo_data_run'+str(i)+'.pkl')['outputs'].squeeze(1).numpy())
     bo_results = {}
     bo_results['outputs_normalized'] = np.array(temp)
-    torch.save('bo_results.pkl', bo_results)
-
+    torch.save(bo_results, 'bo_results.pkl')
 
     normalized_es_data = []
     max_len = 0
