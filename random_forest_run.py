@@ -22,7 +22,8 @@ def main():
         all_best_idxs = []
         for test_size in [50, 100, 150, 200, 300, 400, 500]:
             test_size = test_size - len(all_best_vals)
-            test_size = test_size // 2
+            # test_size = test_size // 2
+            test_size = test_size - 1
             X_train, X_test, y_train, y_test, train_idxs, test_idxs = train_test_split(inputs, outputs, np.arange(len(outputs)), test_size=test_size/len(outputs), random_state=i)
 
             all_best_vals.extend(y_test)
@@ -31,17 +32,17 @@ def main():
             start_time = time.time()
             regr = RandomForestRegressor()
             regr.fit(X_test, y_test)
-            best_indices =  np.argsort(-regr.predict(X_train))[:test_size]
-            #best_idx = np.argmax(regr.predict(X_train))
-            #best_val = y_train[best_idx]
-            best_vals = y_train[best_indices] 
+            # best_indices =  np.argsort(-regr.predict(X_train))[:test_size]
+            best_idx = np.argmax(regr.predict(X_train))
+            best_val = y_train[best_idx]
+            # best_vals = y_train[best_indices] 
             #print(f"Best value {best_val} found at {train_idxs[best_idx]}")
-            #all_best_vals.append(best_val)
-            #all_best_idxs.append(train_idxs[best_idx])
-            all_best_vals.extend(best_vals)
-            all_best_idxs.extend(train_idxs[best_indices])
+            all_best_vals.append(best_val)
+            all_best_idxs.append(train_idxs[best_idx])
+            #all_best_vals.extend(best_vals)
+            #all_best_idxs.extend(train_idxs[best_indices])
 
-            with open('mbo_50percent_rf_methane_data_tsp'+str(test_size)+'_' + str(i)+'.pkl', 'wb') as f:
+            with open('mbo_rf_methane_data_tsp'+str(test_size)+'_' + str(i)+'.pkl', 'wb') as f:
                 pickle.dump({'all_best_vals': all_best_vals, 'all_best_idxs': all_best_idxs}, f)
 
 if __name__ == '__main__':
