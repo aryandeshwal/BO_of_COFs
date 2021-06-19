@@ -22,6 +22,9 @@ def main():
     rf_data['outputs_normalized'] = np.array(temp)
     rf_data['outputs'] = outputs[np.array(temp_idxs)]
     torch.save(rf_data, "rf_single_acq_results.pkl")
+    
+    '''
+    # uncomment to combine files for 50% acquisition
     rf_data = {}
     temp = []
     temp_idxs = []
@@ -31,6 +34,8 @@ def main():
     rf_data['outputs_normalized'] = np.array(temp)
     rf_data['outputs'] = outputs[np.array(temp_idxs)]
     torch.save(rf_data, "rf_50percent_acq_results.pkl")
+    '''
+    
     diverse_rf_data = {}
     temp = []
     temp_idxs = []
@@ -41,7 +46,8 @@ def main():
     diverse_rf_data['outputs'] = outputs[np.array(temp_idxs)]
     torch.save(diverse_rf_data, "diverse_rf_single_acq_results.pkl")
 
-
+    '''
+    # uncomment to combine files for 50% acquisition
     diverse_rf_data = {}
     temp = []
     temp_idxs = []
@@ -51,7 +57,7 @@ def main():
     diverse_rf_data['outputs_normalized'] = np.array(temp)
     diverse_rf_data['outputs'] = outputs[np.array(temp_idxs)]
     torch.save(diverse_rf_data, "diverse_rf_50percent_acq_results.pkl")
-
+    '''
 
     temp = []
     for i in range(10):
