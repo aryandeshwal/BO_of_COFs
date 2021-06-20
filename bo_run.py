@@ -33,9 +33,10 @@ def main():
 
     # print(f"Input data size: {inputs.shape}")
     # print(f"Output data size: {outputs.shape}")
-    for nrr in range(25): 
+    inputs = torch.from_numpy(inputs)
+    for nrr in range(25):
         initial_random_idxs = np.random.choice(np.arange((DATA_SIZE)), size=n_init, replace=False)
-        train_x = torch.from_numpy(inputs[initial_random_idxs])
+        train_x = inputs[initial_random_idxs]
         train_y = torch.from_numpy(outputs[initial_random_idxs]).unsqueeze(-1)
         mll_ei, model_ei = initialize_model(train_x, train_y)#, covar_module)
         for num_iters in range(n_init, n_evals):
@@ -43,12 +44,15 @@ def main():
             fit_gpytorch_model(mll_ei)
             print("Fitting GP finished.")
             EI = ExpectedImprovement(model_ei, best_f = train_y.max().item())
-            EI_vals = EI(torch.from_numpy(inputs).unsqueeze(1)).detach().numpy()
+            # EI_vals = EI(torch.from_numpy(inputs).unsqueeze(1)).detach().numpy() #  vectorized acq function computation 
+            EI_vals = []
+            for x in inputs:
+                with torch.no_grad():
+                    EI_vals.append(EI(x.unsqueeze(0)).item())
             indices = np.argsort(EI_vals)[::-1]
-            #print(indices)
             for idx in indices:
-                if not torch.all(torch.from_numpy(inputs[idx]).unsqueeze(0) == train_x, axis=1).any(): # pick topmost already not in the dataset
-                    best_next_input = torch.from_numpy(inputs[idx]).unsqueeze(0)
+                if not torch.all(inputs[idx].unsqueeze(0) == train_x, axis=1).any(): # pick topmost already not in the dataset
+                    best_next_input = inputs[idx].unsqueeze(0)
                     break
             train_x = torch.cat([train_x, best_next_input])
             train_y = torch.cat([train_y, torch.tensor(outputs[idx]).reshape(1, 1)])
@@ -62,3 +66,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
