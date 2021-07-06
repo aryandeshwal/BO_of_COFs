@@ -1,17 +1,37 @@
-# Bayesian optimization of nanoporous materials
+Python code to reproduce all plots in:
 
-#### This repository contains source code for the paper [Bayesian optimization of nanoporous materials](). The details for reproducing the results are given below:
+> ❝Bayesian optimization of nanoporous materials❞
+> A. Deshwal, C. Simon, J. R. Doppa.
+> ChemRxiv. (2021) [DOI](https://chemrxiv.org/engage/chemrxiv/article-details/60d2c7d7e211337735e056e2)
 
-- To prepare the data from Mercado et al. [here](https://pubs.acs.org/doi/10.1021/acs.chemmater.8b01425), visit [Materials Cloud](https://archive.materialscloud.org/record/2018.0003/v2) and download and untar `properties.tgz`. run `COF_dataframe_to_methane_storage.py` to read in the data and write to `.pkl` files for convenience.
-- The main code of Bayesian optimization can be run by ```python bo_run.py```. The core logic for this code is built using [GpyTorch](https://github.com/cornellius-gp/gpytorch) and
+## requirements
+
+the Python 3 libraries required for the project are in `requirements.txt`. use Jupyter Notebook or Jupyter Lab to run Python 3 in the `*.ipynb`.
+
+# search methods
+
+## step 1: prepare the data
+
+our paper relies on data from Mercado et al. [here](https://pubs.acs.org/doi/10.1021/acs.chemmater.8b01425). visit [Materials Cloud](https://archive.materialscloud.org/record/2018.0003/v2) to download and untar `properties.tgz`. place `properties.csv` in the main directory.
+
+run the code in the Jupyter Notebook `prepare_Xy.ipynb` to prepare the data and write `inputs_and_outputs.pkl` to be read in by other Notebooks.
+
+## step 2: run the searches
+
+run the following Jupyter Notebooks, which will write search results to `.pkl` files.
+* `random_search.ipynb` for random search
+* `evol_search.ipynb` for evolutionary search (CMA-ES)
+* `random_forest_run.ipynb` for one-shot supervised machine learning (via random forests). run twice, one with the flag `diversify_training = True`, the other with `diversify_training = False`.
+* `BO_run.ipynb` for Bayesian optimization. run three times, with `which_acquisition` set to `"EI"`, `"max y_hat"`, and `max sigma`.
+
+each `.ipynb` can be run on a desktop computer. the BO code takes the longest, at ~10 min per run.
+
 [BoTorch](https://github.com/pytorch/botorch) libraries. 
-- Code for One shot supervised learning (Random Forest: with and without diverse training set) is provided in ```random_forest_run.py``` ```diverse_random_forest_run.py```.
-The core logic for this code is written using [Scikit-learn](https://github.com/scikit-learn/scikit-learn) library.
-- To run Evolutionary search (CMA-ES) baseline, run ```python evolutionary_search_run.py```. The core logic for this baseline requires installing [CMA-ES](https://github.com/CMA-ES/pycma) package.
-This code iterates over different choices of ```sigma``` and ```population size``` (two key parameters for instantiating CMA-ES search).  As mentioned in our paper, we found ```sigma=0.2``` and ```population size=20``` to be the best parameters. 
-- Since each code generates a single file for each different random run of the method, we provide a simple wrapper ```compile_results_in_one_file.py``` to combine all the results into a single file.
-- The code for generating figures is shown given in jupyter notebook ```cofs_results.ipynb```.
 
-All the libraries required for the entire repository are given in ```requirements.txt``` file.
+## step 3: visualize the results
+
+finally, run `viz.ipynb` to read in the `*.pkl` files and visualize the results.
 
 
+# toy GP illustrations
+see `synthetic_example.ipynb` for the toy GP plots in the paper.
