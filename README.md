@@ -12,9 +12,9 @@ the Python 3 libraries required for the project are in `requirements.txt`. use J
 
 ## step 1: prepare the data
 
-our paper relies on data from Mercado et al. [here](https://pubs.acs.org/doi/10.1021/acs.chemmater.8b01425). visit [Materials Cloud](https://archive.materialscloud.org/record/2018.0003/v2) to download and untar `properties.tgz`. place `properties.csv` in the main directory.
+our paper relies on data from Mercado et al. [here](https://pubs.acs.org/doi/10.1021/acs.chemmater.8b01425). we visited [Materials Cloud](https://archive.materialscloud.org/record/2018.0003/v2) to download and untar `properties.tgz` giving `properties.csv` in `new/`. this is the data we use.
 
-run the code in the Jupyter Notebook `prepare_Xy.ipynb` to prepare the data and write `inputs_and_outputs.pkl` to be read in by other Notebooks.
+run the code in the Jupyter Notebook `prepare_Xy.ipynb` to prepare the data and write `inputs_and_outputs.pkl` to be read in by other Notebooks. in here, you can set the number of runs `nb_runs`, number of iterations for each run `nb_iterations`, and, if you wish, a flag `downsample_data` for testing.
 
 ## step 2: run the searches
 
@@ -26,11 +26,9 @@ run the following Jupyter Notebooks, which will write search results to `.pkl` f
 
 each `.ipynb` can be run on a desktop computer. the BO code takes the longest, at ~10 min per run.
 
-[BoTorch](https://github.com/pytorch/botorch) libraries. 
-
 ## step 3: visualize the results
 
-finally, run `viz.ipynb` to read in the `*.pkl` files and visualize the results.
+finally, run `viz.ipynb` to read in the `*.pkl` files output from the search runs and visualize the results.
 
 
 # toy GP illustrations
