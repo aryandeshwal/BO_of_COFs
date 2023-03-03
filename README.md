@@ -2,7 +2,7 @@ Python code to reproduce all plots in:
 
 > ❝Bayesian optimization of nanoporous materials❞
 > A. Deshwal, C. Simon, J. R. Doppa.
-> ChemRxiv. (2021) [DOI](https://chemrxiv.org/engage/chemrxiv/article-details/60d2c7d7e211337735e056e2)
+> Molecular Systems Design & Engineering. (2021) [link](https://doi.org/10.1039/D1ME00093D) [preprint](https://chemrxiv.org/engage/chemrxiv/article-details/60d2c7d7e211337735e056e2)
 
 ## requirements
 
